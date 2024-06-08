@@ -5,10 +5,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start": "node backend/index.js",
     "backend": "nodemon backend/index.js",
-    "frontend": "npm run dev --prefix frontend",
-    "dev": "concurrently \"npm run frontend\" \"npm run backend",
-    "build": "npm install && npm install --prefix frontend && npm run build"
+    "frontend": "npm run build --prefix frontend",
+    "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
+    "install-client": "cd frontend && npm install",
+    "install-server": "cd backend && npm install",
+    "install-all": "npm run install-client && npm run install-server"
   },
   "keywords": [],
   "author": "amit rana",
