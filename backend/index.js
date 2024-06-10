@@ -20,7 +20,7 @@ const port = process.env.PORT || 8000;
 
 connectDB();
 app.use(cors({
-  origin: "https://e-commerce-store-lilac-nu.vercel.app/"
+  origin: "https://e-commerce-store-lilac-nu.vercel.app"
 }));
 
 const app = express();
