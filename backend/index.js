@@ -11,11 +11,17 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+const cors = require("cors");
+
+
 
 dotenv.config();
 const port = process.env.PORT || 8000;
 
 connectDB();
+app.use(cors({
+  origin: "https://e-commerce-store-lilac-nu.vercel.app/"
+}));
 
 const app = express();
 
