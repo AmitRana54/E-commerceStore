@@ -21,7 +21,7 @@ const app = express();
 connectDB();
 
 app.use(cors({
-  origin: "https://e-commerce-store-lilac-nu.vercel.app"
+  origin: "*",
 }));
 
 app.use(express.json());
