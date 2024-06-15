@@ -5,7 +5,7 @@
 }
 
 #navigation-container:hover {
-  width: 15%;
+  width: 13%;
 }
 
 /* Initially hide nav-item-name */
@@ -33,4 +33,32 @@
 #navigation-container:hover .search-icon {
   display: none;
   transition: opacity 0.2s ease-in-out; /* Add opacity transition */
+}
+/* Navigation.css */
+#navigation-container {
+  transition: width 0.3s ease;
+}
+
+.nav-item-name {
+  display: none;
+  transition: opacity 0.3s ease;
+}
+
+@media (max-width: 1024px) {
+  #navigation-container {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  #navigation-container {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  #navigation-container:hover .nav-item-name {
+    display: inline;
+    opacity: 1;
+  }
 }

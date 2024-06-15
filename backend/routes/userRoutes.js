@@ -11,7 +11,7 @@ import {
   updateUserById,
 } from "../controllers/userController.js";
 
-import { authenticate, authorizeAdmin } from "../middlewares/authMiddleware.js";
+import { authenticate, authorizeAdmin ,verifyJWT } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router
   .get(authenticate, authorizeAdmin, getAllUsers);
 
 router.post("/auth", loginUser);
-router.post("/logout", logoutCurrentUser);
+router.post("/logout", verifyJWT, logoutCurrentUser);
 
 router
   .route("/profile")
