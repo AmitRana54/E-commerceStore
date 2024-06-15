@@ -6,7 +6,7 @@ import asyncHandler from "./asyncHandler.js";
 const authenticate = asyncHandler(async (req, res, next) => {
   let token;
 
-  // Read JWT from the 'jwt' cookie
+  console.log(req.cookies);
   token = req.cookies.accessToken;
 
   if (token) {
@@ -22,11 +22,11 @@ const authenticate = asyncHandler(async (req, res, next) => {
       return res.status(401).json({ message: "Not authorized, token failed." });
     }
   } else {
-    return res.status(401).json({ message: "Not authorized, no token." });
+    next();
+    // return res.status(401).json({ message: "Not authorized, no token." });
   }
 });
 
-export default authenticate;
 
 const authorizeAdmin = (req, res, next) => {
   console.log(req.user);
@@ -40,7 +40,8 @@ const verifyJWT = asyncHandler(async (req, res, next) => {
   try {
     const token = req.cookies?.accessToken;
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized access: no token provided" });
+      next();
+      // return res.status(401).json({ message: "Unauthorized access: no token provided" });
     }
 
     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
