@@ -7,25 +7,33 @@ export const productApiSlice = apiSlice.injectEndpoints({
       query: ({ keyword }) => ({
         url: `${PRODUCT_URL}`,
         params: { keyword },
+        credentials: 'include',  // Include credentials (cookies)
       }),
       keepUnusedDataFor: 5,
       providesTags: ["Products"],
     }),
 
     getProductById: builder.query({
-      query: (productId) => `${PRODUCT_URL}/${productId}`,
+      query: (productId) => ({
+        url: `${PRODUCT_URL}/${productId}`,
+        credentials: 'include',  // Include credentials (cookies)
+      }),
       providesTags: (result, error, productId) => [
         { type: "Product", id: productId },
       ],
     }),
 
     allProducts: builder.query({
-      query: () => `${PRODUCT_URL}/allProducts`,
+      query: () => ({
+        url: `${PRODUCT_URL}/allProducts`,
+        credentials: 'include',  // Include credentials (cookies)
+      }),
     }),
 
     getProductDetails: builder.query({
       query: (productId) => ({
         url: `${PRODUCT_URL}/${productId}`,
+        credentials: 'include',  // Include credentials (cookies)
       }),
       keepUnusedDataFor: 5,
     }),
@@ -35,6 +43,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         url: `${PRODUCT_URL}`,
         method: "POST",
         body: productData,
+        credentials: 'include',  // Include credentials (cookies)
       }),
       invalidatesTags: ["Product"],
     }),
@@ -44,6 +53,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         url: `${PRODUCT_URL}/${productId}`,
         method: "PUT",
         body: formData,
+        credentials: 'include',  // Include credentials (cookies)
       }),
     }),
 
@@ -52,6 +62,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         url: `${UPLOAD_URL}`,
         method: "POST",
         body: data,
+        credentials: 'include',  // Include credentials (cookies)
       }),
     }),
 
@@ -59,6 +70,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
       query: (productId) => ({
         url: `${PRODUCT_URL}/${productId}`,
         method: "DELETE",
+        credentials: 'include',  // Include credentials (cookies)
       }),
       providesTags: ["Product"],
     }),
@@ -68,16 +80,23 @@ export const productApiSlice = apiSlice.injectEndpoints({
         url: `${PRODUCT_URL}/${data.productId}/reviews`,
         method: "POST",
         body: data,
+        credentials: 'include',  // Include credentials (cookies)
       }),
     }),
 
     getTopProducts: builder.query({
-      query: () => `${PRODUCT_URL}/top`,
+      query: () => ({
+        url: `${PRODUCT_URL}/top`,
+        credentials: 'include',  // Include credentials (cookies)
+      }),
       keepUnusedDataFor: 5,
     }),
 
     getNewProducts: builder.query({
-      query: () => `${PRODUCT_URL}/new`,
+      query: () => ({
+        url: `${PRODUCT_URL}/new`,
+        credentials: 'include',  // Include credentials (cookies)
+      }),
       keepUnusedDataFor: 5,
     }),
 
@@ -86,6 +105,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         url: `${PRODUCT_URL}/filtered-products`,
         method: "POST",
         body: { checked, radio },
+        credentials: 'include',  // Include credentials (cookies)
       }),
     }),
   }),
