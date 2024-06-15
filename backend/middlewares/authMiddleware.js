@@ -6,14 +6,16 @@ import asyncHandler from "./asyncHandler.js";
 const authenticate = asyncHandler(async (req, res, next) => {
   let token;
 
-  console.log(req.cookies,"cookies output tokken");
+  console.log(req.cookies,"cookies output token");
+  console.log(req.cookies.accessToken,"this acces token ");
   token = req.cookies.accessToken;
 
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-      console.log(decoded);
+      console.log(decoded ,"this decoded token");
       req.user = await User.findById(decoded.id).select("-password");
+      console.log(req.user,"this decoded user");
       if (!req.user) {
         return res.status(401).json({ message: "Not authorized, user not found." });
       }
@@ -29,7 +31,7 @@ const authenticate = asyncHandler(async (req, res, next) => {
 
 
 const authorizeAdmin = (req, res, next) => {
-  console.log(req.user);
+  console.log(req.user );
   if (req.user && req.user.isAdmin) {
     next();
   } else {
@@ -39,6 +41,7 @@ const authorizeAdmin = (req, res, next) => {
 const verifyJWT = asyncHandler(async (req, res, next) => {
   try {
     const token = req.cookies?.accessToken;
+    console.log(req.cookies.accessToken,"this is a access token");
     if (!token) {
       return res.status(401).json({ message: "Unauthorized access: no token provided" });
     }
