@@ -1,7 +1,6 @@
+import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
-import bcrypt from "bcryptjs";
-import createToken from "../utils/createToken.js";
 
 const generateAccessTokenandRefreshToken = async (userId) => {
   try {
@@ -50,12 +49,13 @@ const createUser = asyncHandler(async (req, res) => {
     console.log(accessToken, refreshToken);
     
     const options = {
-      httpOnly: true, // Fixed typo
-      secure: true,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // Secure if in production
+      sameSite: 'None',
     };
 
     res.status(201)
-      .cookie("accessToken", accessToken, options) // Fixed typo in "accessToken"
+      .cookie("accessToken", accessToken, options)
       .cookie("refreshToken", refreshToken, options)
       .json({
         _id: newUser._id,
@@ -68,7 +68,6 @@ const createUser = asyncHandler(async (req, res) => {
     res.status(400).send("Invalid user data");
   }
 });
-
 
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -89,7 +88,8 @@ const loginUser = asyncHandler(async (req, res) => {
   
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'None',
   };
 
   res
@@ -106,9 +106,6 @@ const loginUser = asyncHandler(async (req, res) => {
   return;
 });
 
-export default loginUser;
-
-
 const logoutCurrentUser = asyncHandler(async (req, res) => {
   console.log(req.user);
 
@@ -122,7 +119,8 @@ const logoutCurrentUser = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'None',
   };
 
   res.status(200)
@@ -130,8 +128,6 @@ const logoutCurrentUser = asyncHandler(async (req, res) => {
     .clearCookie("refreshToken", options)
     .json({ message: "Logged out successfully" });
 });
-
-
 
 const getAllUsers = asyncHandler(async (req, res) => {
   const users = await User.find({});
