@@ -20,8 +20,19 @@ const app = express();
 
 connectDB();
 
+// Update CORS configuration
+const allowedOrigins = ['https://e-commerce-store-lilac-nu.vercel.app'];
+
 app.use(cors({
-  origin: "*",
+  origin: function (origin, callback) {
+    // Check if the origin is in the allowedOrigins array or if it's undefined (for server-side requests)
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,  // Allow credentials (cookies, etc.)
 }));
 
 app.use(express.json());
