@@ -1,12 +1,13 @@
 import asyncHandler from "../middlewares/asyncHandler.js";
 import Product from "../models/productModel.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js"
 
 const addProduct = asyncHandler(async (req, res) => {
   try {
-    const { image, name, description, price, category, quantity, brand } = req.fields;
-
-   
-    // Validation
+    const { image,  name, description, price, category, quantity, brand } = req.fields;
+    
+  
+console.log(image,"imaage product after claudinary product")
     if (!image) {
       return res.status(400).json({ error: "Image is required" });
     }
@@ -29,7 +30,8 @@ const addProduct = asyncHandler(async (req, res) => {
       return res.status(400).json({ error: "Quantity is required" });
     }
 
-    // Create and save product
+
+    
     const product = new Product({ image, name, brand, description, price, category, quantity });
     await product.save();
 

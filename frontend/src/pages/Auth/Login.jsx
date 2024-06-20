@@ -38,6 +38,7 @@ const Login = () => {
       toast.error(err?.data?.message || err.error);
     }
   };
+  console.log(document.cookies,"cookies in forntend")
 
   return (
     <div>

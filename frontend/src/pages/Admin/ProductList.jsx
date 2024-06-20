@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import AdminMenu from "./AdminMenu";
 
 const ProductList = () => {
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -38,30 +38,33 @@ const ProductList = () => {
       productData.append("brand", brand);
       productData.append("countInStock", stock);
 
-    const data = await createProduct(productData);
-    console.log(data,"product");
+      const data = await createProduct(productData).unwrap();
+      console.log(data, "product");
 
-      if (data.error) {
-        toast.error("Product create failed. Try Again." ,data,error);
-      } else {
-        toast.success(`${data.name} is created`);
-        navigate("/");
-      }
+      toast.success(`${data.name} is created`);
+      navigate("/");
     } catch (error) {
       console.error(error);
-      toast.error("Product create failed. Try Again.");
+      toast.error("Product creation failed. Try again.");
     }
   };
 
   const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    if (!file) {
+      toast.error("Please select an image file.");
+      return;
+    }
+
     const formData = new FormData();
-    formData.append("image", e.target.files[0]);
+    formData.append("image", file);
 
     try {
       const res = await uploadProductImage(formData).unwrap();
       toast.success(res.message);
       setImage(res.image);
-      setImageUrl(res.image);
+       setImageUrl(res.image);
+      console.log(imageUrl);
     } catch (error) {
       toast.error(error?.data?.message || error.error);
     }
@@ -88,12 +91,12 @@ const ProductList = () => {
             <label className="border text-white px-4 block w-full text-center rounded-lg cursor-pointer font-bold py-11">
               {image ? image.name : "Upload Image"}
               <input
-  type="file"
-  name="image"
-  accept=".jpg,.jpeg,.png,.gif,.webp"
-  onChange={uploadFileHandler}
-  className={!image ? "hidden" : "text-white"}
-/>
+                type="file"
+                name="image"
+                accept=".jpg,.jpeg,.png,.gif,.webp"
+                onChange={uploadFileHandler}
+                className="hidden"
+              />
             </label>
           </div>
 
@@ -153,29 +156,36 @@ const ProductList = () => {
               <div>
                 <label htmlFor="name block">Count In Stock</label> <br />
                 <input
-                  type="text"
+                  type="number"
                   className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white"
                   value={stock}
-                  onChange={(e) => setStock(e.target.value)}
+                  onChange={(e) => setStock(Number(e.target.value))}
                 />
               </div>
 
               <div className="mb-4">
-  <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-300">Choose Category</label>
-  <select
-    id="category"
-    placeholder="Choose Category"
-    className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
-    onChange={(e) => setCategory(e.target.value)}
-  >
-    <option value="" disabled selected>Choose a category</option>
-    {categories?.map((c) => (
-      <option key={c._id} value={c._id}>
-        {c.name}
-      </option>
-    ))}
-  </select>
-</div>
+                <label
+                  htmlFor="category"
+                  className="block mb-2 text-sm font-medium text-gray-300"
+                >
+                  Choose Category
+                </label>
+                <select
+                  id="category"
+                  className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onChange={(e) => setCategory(e.target.value)}
+                  value={category}
+                >
+                  <option value="" disabled>
+                    Choose a category
+                  </option>
+                  {categories?.map((c) => (
+                    <option key={c._id} value={c._id}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             <button

@@ -1,5 +1,5 @@
 #navigation-container {
-  width: 4%;
+  width: 6%;
   transition: width 0.3s ease-in-out;
   overflow: hidden; /* Hide overflowing content during transition */
 }
@@ -44,21 +44,3 @@
   transition: opacity 0.3s ease;
 }
 
-@media (max-width: 1024px) {
-  #navigation-container {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  #navigation-container {
-    display: none;
-  }
-}
-
-@media (min-width: 1024px) {
-  #navigation-container:hover .nav-item-name {
-    display: inline;
-    opacity: 1;
-  }
-}

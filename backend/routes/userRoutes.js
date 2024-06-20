@@ -9,6 +9,7 @@ import {
   deleteUserById,
   getUserById,
   updateUserById,
+  refreshAccessToken,
 } from "../controllers/userController.js";
 
 import { authenticate, authorizeAdmin ,verifyJWT } from "../middlewares/authMiddleware.js";
@@ -18,21 +19,21 @@ const router = express.Router();
 router
   .route("/")
   .post(createUser)
-  .get(authorizeAdmin, getAllUsers);
+  .get(authenticate, authorizeAdmin, getAllUsers);
 
 router.post("/auth", loginUser);
-router.post("/logout",  logoutCurrentUser);
-
+router.post("/logout", verifyJWT, logoutCurrentUser);
+router.post("refresh",refreshAccessToken)
 router
   .route("/profile")
-  .get( getCurrentUserProfile)
-  .put( updateCurrentUserProfile);
+  .get(authenticate, getCurrentUserProfile)
+  .put(authenticate, updateCurrentUserProfile);
 
 // ADMIN ROUTES 👇
 router
   .route("/:id")
-  .delete(  deleteUserById)
-  .get(  getUserById)
-  .put( updateUserById);
+  .delete(authenticate, authorizeAdmin, deleteUserById)
+  .get(authenticate, authorizeAdmin, getUserById)
+  .put(authenticate, authorizeAdmin, updateUserById);
 
 export default router;

@@ -71,7 +71,7 @@ userSchema.methods.generateRefreshToken = function() {
     }
   );
 };
-
+console.log(process.env.REFRESH_TOKEN_SECRET  )
 const User = mongoose.model("User", userSchema);
 
 export default User;
