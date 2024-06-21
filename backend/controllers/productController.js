@@ -93,7 +93,7 @@ const removeProduct = asyncHandler(async (req, res) => {
 
 const fetchProducts = asyncHandler(async (req, res) => {
   try {
-    const pageSize = 6;
+    const pageSize = 8;
 
     const keyword = req.query.keyword
       ? {
@@ -192,7 +192,7 @@ const addProductReview = asyncHandler(async (req, res) => {
 
 const fetchTopProducts = asyncHandler(async (req, res) => {
   try {
-    const products = await Product.find({}).sort({ rating: -1 }).limit(4);
+    const products = await Product.find({}).sort({ rating: -1 }).limit(2);
     res.json(products);
   } catch (error) {
     console.error(error);

@@ -16,7 +16,7 @@ const ProductList = () => {
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
   const [brand, setBrand] = useState("");
-  const [stock, setStock] = useState(0);
+  const [stock, setStock] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
 
@@ -159,7 +159,7 @@ const ProductList = () => {
                   type="number"
                   className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white"
                   value={stock}
-                  onChange={(e) => setStock(Number(e.target.value))}
+                  onChange={(e) => setStock(e.target.value)}
                 />
               </div>
 
