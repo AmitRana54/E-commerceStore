@@ -4,8 +4,8 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js"
 
 const addProduct = asyncHandler(async (req, res) => {
   try {
-    const { image,  name, description, price, category, quantity, brand } = req.fields;
-    
+    const { image,  name, description, price, category, quantity, brand, countInStock} = req.fields;
+    console.log(req.fields)
   
 console.log(image,"imaage product after claudinary product")
     if (!image) {
@@ -32,7 +32,7 @@ console.log(image,"imaage product after claudinary product")
 
 
     
-    const product = new Product({ image, name, brand, description, price, category, quantity });
+    const product = new Product({ image, name, brand, description, price, category, quantity ,countInStock });
     await product.save();
 
     // Send response
@@ -49,6 +49,7 @@ console.log(image,"imaage product after claudinary product")
 const updateProductDetails = asyncHandler(async (req, res) => {
   try {
     const { name, description, price, category, quantity, brand  } = req.fields;
+    console.log(req.fields,"count in stock");
 
     // Validation
     switch (true) {

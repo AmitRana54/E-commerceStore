@@ -14,7 +14,8 @@ import {
 
 const ProductCarousel = () => {
   const { data: products, isLoading, error } = useGetTopProductsQuery();
-
+  console.log(products, "products data from carousel");
+  
   const settings = {
     dots: false,
     infinite: true,
@@ -35,7 +36,7 @@ const ProductCarousel = () => {
       ) : (
         <Slider
           {...settings}
-          className="xl:w-[50rem]  lg:w-[50rem] md:w-[56rem] sm:w-[40rem] sm:block"
+          className="xl:w-[45rem] mt-6 lg:w-[45rem] md:w-[45rem] sm:w-[30rem] sm:block"
         >
           {products.map(
             ({
@@ -55,19 +56,19 @@ const ProductCarousel = () => {
                 <img
                   src={image}
                   alt={name}
-                  className="w-full rounded-lg object-cover h-[30rem]"
+                  className="w-full rounded-lg object-cover h-[24rem]"
                 />
 
-                <div className="mt-4 flex justify-between">
+                <div className="mt-4 flex flex-col lg:flex-row justify-between">
                   <div className="one">
                     <h2>{name}</h2>
-                    <p> $ {price}</p> <br /> <br />
-                    <p className="w-[25rem]">
+                    <p>$ {price}</p> <br /> <br />
+                    <p className="w-full lg:w-[18rem]">
                       {description.substring(0, 170)} ...
                     </p>
                   </div>
 
-                  <div className="flex justify-between w-[20rem]">
+                  <div className="flex flex-col lg:flex-row justify-between lg:w-[15rem]">
                     <div className="one">
                       <h1 className="flex items-center mb-6">
                         <FaStore className="mr-2 text-white" /> Brand: {brand}
