@@ -12,11 +12,11 @@ const Profile = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [nameError, setNameError] = useState("");
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const [updateProfile, { isLoading: loadingUpdateProfile }] =
-    useProfileMutation();
+  const [updateProfile, { isLoading: loadingUpdateProfile }] = useProfileMutation();
 
   useEffect(() => {
     setUserName(userInfo.username);
@@ -25,10 +25,27 @@ const Profile = () => {
 
   const dispatch = useDispatch();
 
+  const validateName = (name) => {
+    const regex = /^[A-Za-z\s]+$/;
+    return regex.test(name);
+  };
+
+  const handleNameChange = (e) => {
+    const name = e.target.value;
+    if (validateName(name)) {
+      setNameError("");
+    } else {
+      toast.error("Name can only contain letters and spaces");
+    }
+    setUserName(name);
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
+    } else if (nameError) {
+      toast.error(nameError);
     } else {
       try {
         const res = await updateProfile({
@@ -58,8 +75,9 @@ const Profile = () => {
                 placeholder="Enter name"
                 className="form-input p-4 rounded-sm w-full"
                 value={username}
-                onChange={(e) => setUserName(e.target.value)}
+                onChange={handleNameChange}
               />
+              {nameError && <p className="text-red-500 mt-1">{nameError}</p>}
             </div>
 
             <div className="mb-4">

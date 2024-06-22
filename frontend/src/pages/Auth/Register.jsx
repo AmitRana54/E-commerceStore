@@ -7,10 +7,11 @@ import { setCredentials } from "../../redux/features/auth/authSlice";
 import { toast } from "react-toastify";
 
 const Register = () => {
-  const [username, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [nameError, setNameError] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,11 +30,28 @@ const Register = () => {
     }
   }, [navigate, redirect, userInfo]);
 
+  const validateName = (name) => {
+    const regex =/^[A-Za-z\s]+$/;
+    return regex.test(name);
+  };
+
+  const handleNameChange = (e) => {
+    const name = e.target.value;
+    if (validateName(name)) {
+      setNameError("");
+    } else {
+      toast.error("Invalid name")
+    }
+    setUsername(name);
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
+    } else if (nameError) {
+      toast.error(nameError);
     } else {
       try {
         const res = await register({ username, email, password }).unwrap();
@@ -66,8 +84,9 @@ const Register = () => {
               className="mt-1 p-2 border rounded w-full"
               placeholder="Enter name"
               value={username}
-              onChange={(e) => setName(e.target.value)}
+              onChange={handleNameChange}
             />
+            {nameError && <p className="text-red-500 mt-1">{nameError}</p>}
           </div>
 
           <div className="my-[2rem]">

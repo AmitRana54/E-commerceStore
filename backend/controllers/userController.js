@@ -48,17 +48,17 @@ const createUser = asyncHandler(async (req, res) => {
       await generateAccessTokenandRefreshToken(newUser._id);
     console.log(accessToken, refreshToken);
 
-    // const options = {
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: "strict",
-    //   maxAge: 1000 * 60 * 60 * 24, // 1 day in milliseconds
-    // };
+    const options = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24, // 1 day in milliseconds
+    };
 
     res
       .status(201)
-      // .cookie("accessToken", accessToken, options) // Fixed typo in "accessToken"
-      // .cookie("refreshToken", refreshToken, options)
+      .cookie("accessToken", accessToken, options) 
+      .cookie("refreshToken", refreshToken, options)
       .json({
         _id: newUser._id,
         username: newUser.username,

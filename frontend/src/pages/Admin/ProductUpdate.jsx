@@ -24,7 +24,7 @@ const AdminProductUpdate = () => {
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
   const [brand, setBrand] = useState("");
-  const [stock, setStock] = useState("");
+  const [stock, setStock] = useState();
 
   const [uploadProductImage] = useUploadProductImageMutation();
   const [updateProduct] = useUpdateProductMutation();
@@ -225,6 +225,9 @@ const AdminProductUpdate = () => {
                   className="p-4 mb-3 w-[30rem] border rounded-lg bg-[#101011] text-white mr-[5rem]"
                   onChange={(e) => setCategory(e.target.value)}
                 >
+                  <option value="" disabled>
+                    Select a category
+                  </option>
                   {categories.map((c) => (
                     <option key={c._id} value={c._id}>
                       {c.name}

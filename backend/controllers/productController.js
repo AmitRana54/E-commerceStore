@@ -49,7 +49,7 @@ console.log(image,"imaage product after claudinary product")
 const updateProductDetails = asyncHandler(async (req, res) => {
   try {
     const { name, description, price, category, quantity, brand  } = req.fields;
-    console.log(req.fields,"count in stock");
+    console.log(req.fields,"count in stock this is from ");
 
     // Validation
     switch (true) {
@@ -73,7 +73,8 @@ const updateProductDetails = asyncHandler(async (req, res) => {
       { new: true }
     );
 
-    await product.save();
+   const  newPro = await product.save();
+   console.log(newPro,"updated");
 
     res.json(product);
   } catch (error) {
@@ -94,7 +95,7 @@ const removeProduct = asyncHandler(async (req, res) => {
 
 const fetchProducts = asyncHandler(async (req, res) => {
   try {
-    const pageSize = 8;
+    const pageSize = 15;
 
     const keyword = req.query.keyword
       ? {
