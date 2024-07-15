@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navigation from "./pages/Auth/Navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       <main className="ml-12">
         <Outlet />
       </main>
+      <Footer/>
     </>
   );
 };
