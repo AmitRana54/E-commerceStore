@@ -15,13 +15,16 @@ const Header = () => {
     return <h1>ERROR</h1>;
   }
 
+  // Slice the data array to get only the first two products
+  const topProducts = data.slice(0, 2);
+
   return (
     <>
-    <Brand/>
+      <Brand />
       <div className="flex justify-around">
-        <div className="xl:block lg:hidden md:hidden:sm:hidden">
+        <div className="xl:block lg:hidden md:hidden sm:hidden">
           <div className="grid grid-cols-1">
-            {data.map((product) => (
+            {topProducts.map((product) => (
               <div key={product._id}>
                 <SmallProduct product={product} />
               </div>

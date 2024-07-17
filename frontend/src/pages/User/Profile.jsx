@@ -7,6 +7,7 @@ import { useProfileMutation } from "../../redux/api/usersApiSlice";
 import { setCredentials } from "../../redux/features/auth/authSlice";
 import { Link } from "react-router-dom";
 
+
 const Profile = () => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -122,7 +123,7 @@ const Profile = () => {
               </button>
 
               <Link
-                to="/user-orders"
+                to="/useroders"
                 className="bg-pink-600 text-white py-2 px-4 rounded hover:bg-pink-700"
               >
                 My Orders

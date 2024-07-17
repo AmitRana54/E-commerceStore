@@ -85,17 +85,18 @@ const updateProductDetails = asyncHandler(async (req, res) => {
 
 const removeProduct = asyncHandler(async (req, res) => {
   try {
+    console.log(req.params,"product");
     const product = await Product.findByIdAndDelete(req.params.id);
     res.json(product);
   } catch (error) {
-    console.error(error);
+    console.error(error,"this eror ");
     res.status(500).json({ error: "Server error" });
   }
 });
 
 const fetchProducts = asyncHandler(async (req, res) => {
   try {
-    const pageSize = 15;
+    const pageSize = 18;
 
     const keyword = req.query.keyword
       ? {
@@ -194,7 +195,7 @@ const addProductReview = asyncHandler(async (req, res) => {
 
 const fetchTopProducts = asyncHandler(async (req, res) => {
   try {
-    const products = await Product.find({}).sort({ rating: -1 }).limit(2);
+    const products = await Product.find({}).sort({ rating: -1 }).limit(6);
     res.json(products);
   } catch (error) {
     console.error(error);

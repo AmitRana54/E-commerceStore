@@ -100,8 +100,9 @@ const AdminProductUpdate = () => {
     try {
       const answer = window.confirm("Are you sure you want to delete this product?");
       if (!answer) return;
-
+console.log(answer,params._id,"delete");
       const result = await deleteProduct(params._id);
+      console.log(result.result);
       if (result.error) {
         toast.error("Delete failed. Try again.", {
           position: toast.POSITION.TOP_RIGHT,
@@ -115,6 +116,7 @@ const AdminProductUpdate = () => {
         navigate("/admin/allproductslist");
       }
     } catch (err) {
+      console.log(err,"Error");
       toast.error("Delete failed. Try again.", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
